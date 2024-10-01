@@ -10,9 +10,14 @@ This project demonstrates training an autoencoder on the MNIST dataset using PyT
 - `development`: For developing new model architectures and testing features
 - `reproducibility`: Ensures that paper results are reproducible
 
-## How to set up the environment
+## Creating the Environment
 
 ```bash
 conda env create -f environment.yml
 conda activate mnist-autoencoder
 ```
+
+
+## Exporting conda environment
+`conda env export | grep -v "^prefix: " > environment.yml`
+
