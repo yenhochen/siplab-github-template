@@ -7,8 +7,7 @@ This project demonstrates training an autoencoder on the MNIST dataset using PyT
 ## Branches
 
 - `main`: Contains the stable version of the code
-- `development`: For developing new model architectures and testing features
-- `reproducibility`: Ensures that paper results are reproducible
+- `new_feature`: For developing new model architectures and testing new features
 
 ## Creating the Environment
 
