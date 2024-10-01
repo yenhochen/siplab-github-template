@@ -23,5 +23,7 @@ conda activate mnist-autoencoder
 
 
 ## Recreate Figures
+Run these commands from the root directory to recreate the figures
+
 1. Plot Samples from Dataloader: `python scripts/plot_data_samples.py --config configs/config.yml`
-2. 
+2. Train model: `python scripts/train_model.py --config configs/config.yml`
