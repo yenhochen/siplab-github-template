@@ -1,0 +1,23 @@
+# random seed
+seed: 0
+
+# data_args
+dataset: "mnist"
+data_dir: "../data"
+
+# train args:
+device: "cuda:0"
+batch_size: 1024
+learning_rate: 0.01
+weight_decay: 0.01
+max_lr: 0.001
+train_epochs: 10
+warmup_epochs: 5
+
+# model params
+img_height: 28
+img_width: 28
+hidden_dim: 64
+latent_dim: 8
+n_layers: 3
+layernorm: true
