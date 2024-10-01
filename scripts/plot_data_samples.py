@@ -1,6 +1,7 @@
 import os
 import sys
 
+# Set the root path to one level up from the current script's directory.
 root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_path)
 
@@ -12,25 +13,26 @@ from src.utils import load_config, plot_samples_from_dataloader, seed_everything
 
 
 def main():
-    # initialize logger
+    # Set up logging to output INFO-level messages in a specific format with timestamps.
     logging.basicConfig(
         level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
     )
     logger = logging.getLogger(__name__)
 
+    # Set up argument parser to accept a path to a configuration file from the command line.
     parser = argparse.ArgumentParser(description="Plot samples from data loaders.")
     parser.add_argument(
         "--config", type=str, required=True, help="path to yaml config file"
     )
     args = parser.parse_args()
 
-    # load configs
+    # Load the configuration file.
     logger.info(f"Loading Config From {os.path.abspath(args.config)}")
     config = load_config(args.config)
     config.get("nrows", 5)
     config.get("ncols", 5)
 
-    # set random seeds
+    # Set random seed for reproducibility using the seed defined in the config.
     logger.info(f"Setting random seed to {config['seed']}")
     seed_everything(config["seed"])
 
@@ -50,7 +52,7 @@ def main():
     else:
         logger.error("Dataset must be either 'mnist' or 'fmnist' ")
 
-    # plot data from dataloaders
+    # Plot sample images from the training dataset and save the plot to a file.
     plot_samples_from_dataloader(
         trainloader,
         f"figs/{config['dataset']}_train_samples.png",
@@ -58,6 +60,7 @@ def main():
         ncols=config["ncols"],
     )
 
+    # Plot sample images from the validation dataset and save the plot to a file.
     plot_samples_from_dataloader(
         valloader,
         f"figs/{config['dataset']}_val_samples.png",
