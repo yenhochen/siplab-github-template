@@ -21,3 +21,7 @@ conda activate mnist-autoencoder
 ## Exporting conda environment
 `conda env export | grep -v "^prefix: " > environment.yml`
 
+
+## Recreate Figures
+1. Plot Samples from Dataloader: `python scripts/plot_data_samples.py --config configs/config.yml`
+2. 
