@@ -2,7 +2,6 @@ import torch
 from torchvision import datasets, transforms
 
 
-# Function to create a decorator that wraps a dataset loading function.
 def load_dataset(dataset_class):
     def decorator(func):
         def wrapper(data_dir="./data", batch_size=64):
@@ -31,12 +30,12 @@ def load_dataset(dataset_class):
 
     return decorator
 
-# Apply the @load_dataset decorator to get_mnist_loader:
+
 @load_dataset(datasets.MNIST)
 def get_mnist_loader(dataset, batch_size):
     pass
 
-# Apply the @load_dataset decorator to get_fmnist_loader:
+
 @load_dataset(datasets.FashionMNIST)
 def get_fmnist_loader(dataset, batch_size):
     pass

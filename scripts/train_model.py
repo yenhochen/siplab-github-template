@@ -1,7 +1,6 @@
 import os
 import sys
 
-# Add root path to Python's system path for module imports
 root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_path)
 
@@ -17,7 +16,7 @@ import torch
 
 
 def main():
-    # Set up logging to display info messages in the console with a timestamp and log level
+    # initialize logger
     logging.basicConfig(
         level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
     )
@@ -29,20 +28,19 @@ def main():
     )
     args = parser.parse_args()
 
-    # Load configurations from the YAML config file
+    # load configs
     logger.info(f"Loading Config From {os.path.abspath(args.config)}")
     config = load_config(args.config)
 
-    # Set random seed for reproducibility
+    # set random seeds
     logger.info(f"Setting random seed to {config['seed']}")
     seed_everything(config["seed"])
 
-    # Load the dataset based on the config
+    # load data
     logger.info(
         f"Loading {config['dataset']} dataset with batch size {config['batch_size']}"
     )
 
-    # Conditionally load MNIST or FashionMNIST based on the config
     if config["dataset"] == "mnist":
         trainloader, valloader = get_mnist_loader(
             config["data_dir"], batch_size=config["batch_size"]
@@ -55,7 +53,6 @@ def main():
         logger.error("Dataset must be either 'mnist' or 'fmnist' ")
 
 
-    # Log details about the model being initialized
     logger.info(f"Initializing model with:")
     logger.info(f"\timg height, width {config['img_height']}, {config['img_width']}")
     logger.info(f"\thidden dim {config['hidden_dim']}")
@@ -64,7 +61,6 @@ def main():
     logger.info(f"\tlayernorm {config['layernorm']}")
     logger.info(f"on device: {config['device']}")
 
-    # Initialize the autoencoder model with the config parameters
     model = Autoencoder(
         config["img_height"],
         config["img_width"],
@@ -75,14 +71,12 @@ def main():
     )
     model = model.to(config["device"])
 
-    # Log training details
     logger.info(f"Training Model with:")
     logger.info(f"\ttrain epochs: {config['train_epochs']}")
     logger.info(f"\tlearning rate: {config['learning_rate']}")
     logger.info(f"\tweight decay: {config['weight_decay']}")
     logger.info(f"\tsched gamma: {config['sched_gamma']}")
 
-    # Initialize the trainer object and start training
     trainer = Trainer(model, trainloader, valloader, logger)
     results = trainer.train(
         learning_rate=config["learning_rate"],
@@ -93,12 +87,11 @@ def main():
     )
     logger.info(f"Training complete!")
 
-    # Save the loss curve plot to a file
     loss_curve_path = f"figs/{config['dataset']}_loss_curve.png"
     plot_loss_curve(results, loss_curve_path)
     logger.info(f"Saving loss curve plot to {loss_curve_path}")
     
-    # Plot a reconstruction of a single batch from the validation set
+    # plot inference for a single batch from the val set
     with torch.no_grad():
         img, label = next(iter(valloader))
         img = img.to(config["device"])
@@ -106,7 +99,7 @@ def main():
         img = img.cpu()
         reconstructed = reconstructed.cpu()
 
-    # Save the reconstruction plot to a file
+    
     reconsturction_path = f"figs/{config['dataset']}_reconstruction.png"
     plot_reconstruction(img, reconstructed, reconsturction_path)
     logger.info(f"Saving reconstruction plot to {reconsturction_path}")
