@@ -3,3 +3,5 @@ notebooks/.*/
 .vscode/
 data/*MNIST/
 *.egg*
+*/scheduler.py
+
