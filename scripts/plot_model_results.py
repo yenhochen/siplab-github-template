@@ -11,11 +11,8 @@ from src.load_datasets import get_fmnist_loader, get_mnist_loader
 from src.utils import load_config, seed_everything
 from src.plotting import plot_reconstruction, plot_loss_curve
 from src.utils import load_model, load_pickle
-from src.train import Trainer
-from src.models import Autoencoder
 import torch
 
-import pickle
 
 def main():
     # initialize logger
