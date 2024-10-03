@@ -9,11 +9,12 @@ import logging
 
 from src.load_datasets import get_fmnist_loader, get_mnist_loader
 from src.utils import load_config, seed_everything
-from src.plotting import plot_reconstruction, plot_loss_curve
+from src.utils import save_model, load_model, save_pickle, load_pickle
 from src.train import Trainer
 from src.models import Autoencoder
 import torch
 
+import pickle
 
 def main():
     # initialize logger
@@ -87,22 +88,37 @@ def main():
     )
     logger.info(f"Training complete!")
 
-    loss_curve_path = f"figs/{config['dataset']}_loss_curve.png"
-    plot_loss_curve(results, loss_curve_path)
-    logger.info(f"Saving loss curve plot to {loss_curve_path}")
+
+    # save results and model
     
-    # plot inference for a single batch from the val set
-    with torch.no_grad():
-        img, label = next(iter(valloader))
-        img = img.to(config["device"])
-        reconstructed = model(img)
-        img = img.cpu()
-        reconstructed = reconstructed.cpu()
+
+    logger.info(f"Saving results to {config['save_results_path']}")
+    save_pickle(results, config["save_results_path"])
+
+    logger.info(f"Saving model to {config['save_model_path']}")
+    save_model(model, config["save_model_path"])
+
+    # # Save the dictionary to a pickle file
+    # with open(config["save_results_path"], 'wb') as file:
+    #     pickle.dump(results, file)
+
+
+    # loss_curve_path = f"figs/{config['dataset']}_loss_curve.png"
+    # plot_loss_curve(results, loss_curve_path)
+    # logger.info(f"Saving loss curve plot to {loss_curve_path}")
+    
+    # # plot inference for a single batch from the val set
+    # with torch.no_grad():
+    #     img, label = next(iter(valloader))
+    #     img = img.to(config["device"])
+    #     reconstructed = model(img)
+    #     img = img.cpu()
+    #     reconstructed = reconstructed.cpu()
 
     
-    reconsturction_path = f"figs/{config['dataset']}_reconstruction.png"
-    plot_reconstruction(img, reconstructed, reconsturction_path)
-    logger.info(f"Saving reconstruction plot to {reconsturction_path}")
+    # reconsturction_path = f"figs/{config['dataset']}_reconstruction.png"
+    # plot_reconstruction(img, reconstructed, reconsturction_path)
+    # logger.info(f"Saving reconstruction plot to {reconsturction_path}")
 
 
 if __name__ == "__main__":

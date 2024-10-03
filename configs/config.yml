@@ -24,3 +24,8 @@ layernorm: false
 # plotting
 nrows: 5
 ncols: 5
+
+save_results_path: "results/train_results.pkl"
+save_model_path: "checkpoints/autoencoder_model.pth"
+loss_curve_path: "figs/fmnist_loss_curve.png"
+reconstruction_path: "figs/fmnist_reconstruction.png"

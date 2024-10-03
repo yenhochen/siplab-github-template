@@ -13,7 +13,6 @@ weight_decay: 0.00
 train_epochs: 10
 sched_gamma: 0.999
 
-
 # model params
 img_height: 28
 img_width: 28
@@ -21,3 +20,8 @@ hidden_dim: 128
 latent_dim: 32
 n_layers: 3
 layernorm: false
+
+save_results_path: "../results/notebook_train_results.pkl"
+save_model_path: "../checkpoints/notebook_autoencoder_model.pth"
+loss_curve_path: "../figs/notebook_mnist_loss_curve.png"
+reconstruction_path: "../figs/notebook_mnist_reconstruction.png"
