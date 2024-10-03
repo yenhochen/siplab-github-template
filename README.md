@@ -86,10 +86,16 @@ We provide training and plotting scripts in the `scripts` directory, which requi
    python scripts/plot_data_samples.py --config configs/config.yml
    ```
    
-3. Train model:
+2. Train model:
    
    ```bash
    python scripts/train_model.py --config configs/config.yml
+   ```
+
+3. Plot results after training:
+
+   ```bash
+   python scripts/plot_model_results.py --config configs/config.yml
    ```
 
 
